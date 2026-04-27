@@ -1,4 +1,3 @@
-{% load form_tags %}
 {% url 'habit_list' as habit_list_url %}
 {% url 'analytics_dashboard' as analytics_dashboard_url %}
 <!DOCTYPE html>
@@ -20,20 +19,20 @@
                 <div class="collapse navbar-collapse" id="mainNav">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home' %}">Главная</a>
+                            <a class="nav-link" href="{% url 'home' %}">Home</a>
                         </li>
                         <li class="nav-item">
                             {% if habit_list_url %}
-                                <a class="nav-link" href="{{ habit_list_url }}">Привычки</a>
+                                <a class="nav-link" href="{{ habit_list_url }}">Habits</a>
                             {% else %}
-                                <span class="nav-link text-muted">Привычки</span>
+                                <span class="nav-link text-muted">Habits</span>
                             {% endif %}
                         </li>
                         <li class="nav-item">
                             {% if analytics_dashboard_url %}
-                                <a class="nav-link" href="{{ analytics_dashboard_url }}">Аналитика</a>
+                                <a class="nav-link" href="{{ analytics_dashboard_url }}">Analytics</a>
                             {% else %}
-                                <span class="nav-link text-muted">Аналитика</span>
+                                <span class="nav-link text-muted">Analytics</span>
                             {% endif %}
                         </li>
                     </ul>
