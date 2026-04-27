@@ -2,6 +2,10 @@ from django.contrib import admin
 
 from .models import Habit, HabitCompletion
 
+admin.site.site_header = "Администрирование трекера привычек"
+admin.site.site_title = "Трекер привычек"
+admin.site.index_title = "Панель управления"
+
 
 @admin.register(Habit)
 class HabitAdmin(admin.ModelAdmin):
