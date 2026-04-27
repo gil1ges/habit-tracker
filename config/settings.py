@@ -21,6 +21,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
+    "core",
 ]
 
 MIDDLEWARE = [
@@ -95,6 +97,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
+AUTH_USER_MODEL = "users.CustomUser"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
