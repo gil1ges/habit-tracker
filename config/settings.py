@@ -100,5 +100,19 @@ LOGOUT_REDIRECT_URL = "habit_list"
 
 AUTH_USER_MODEL = "users.CustomUser"
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
+
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
