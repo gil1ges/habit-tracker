@@ -1,17 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}Logged Out | Habit Tracker{% endblock %}
+{% block title %}Выход | Трекер привычек{% endblock %}
 
 {% block content %}
 <section class="row justify-content-center">
     <div class="col-md-7 col-lg-6">
         <div class="card border-0 shadow-sm text-center">
             <div class="card-body p-4 p-md-5">
-                <h1 class="h3 mb-3">You have been logged out</h1>
-                <p class="text-secondary mb-4">Your session ended successfully. You can sign in again whenever you're ready.</p>
+                <h1 class="h3 mb-3">Вы вышли из аккаунта</h1>
+                <p class="text-secondary mb-4">Сеанс завершён успешно. Вы можете снова войти в любой момент.</p>
                 <div class="d-flex justify-content-center gap-2 flex-wrap">
-                    <a class="btn btn-primary" href="{% url 'login' %}">Login again</a>
-                    <a class="btn btn-outline-secondary" href="{% url 'home' %}">Go home</a>
+                    <a class="btn btn-primary" href="{% url 'login' %}">Войти снова</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'home' %}">На главную</a>
                 </div>
             </div>
         </div>

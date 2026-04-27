@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Analytics Dashboard | Habit Tracker{% endblock %}
+{% block title %}Аналитика | Трекер привычек{% endblock %}
 
 {% block content %}
 <section class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center gap-3 mb-4">
     <div>
-        <h1 class="h2 mb-1">Analytics Dashboard</h1>
-        <p class="text-muted mb-0">Track your habit progress, consistency, and daily momentum.</p>
+        <h1 class="h2 mb-1">Панель аналитики</h1>
+        <p class="text-muted mb-0">Следите за прогрессом привычек, регулярностью и ежедневным ритмом.</p>
     </div>
     <a class="btn btn-outline-success" href="{% url 'analytics_api_stats' %}">
-        Open stats API
+        Открыть API статистики
     </a>
 </section>
 
 <section class="card border-0 shadow-sm mb-4">
     <div class="card-body p-4">
-        <p class="text-uppercase text-muted small fw-semibold mb-2">Motivational Quote</p>
+        <p class="text-uppercase text-muted small fw-semibold mb-2">Мотивирующая цитата</p>
         <blockquote class="blockquote mb-2">
             <p class="mb-0">"{{ quote.content }}"</p>
         </blockquote>
@@ -27,7 +27,7 @@
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <p class="text-muted small text-uppercase fw-semibold mb-2">Total Habits</p>
+                <p class="text-muted small text-uppercase fw-semibold mb-2">Всего привычек</p>
                 <h2 class="display-6 mb-0">{{ stats.total_habits }}</h2>
             </div>
         </div>
@@ -35,7 +35,7 @@
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <p class="text-muted small text-uppercase fw-semibold mb-2">Active Habits</p>
+                <p class="text-muted small text-uppercase fw-semibold mb-2">Активных привычек</p>
                 <h2 class="display-6 mb-0">{{ stats.active_habits }}</h2>
             </div>
         </div>
@@ -43,7 +43,7 @@
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <p class="text-muted small text-uppercase fw-semibold mb-2">Total Completions</p>
+                <p class="text-muted small text-uppercase fw-semibold mb-2">Всего выполнений</p>
                 <h2 class="display-6 mb-0">{{ stats.total_completions }}</h2>
             </div>
         </div>
@@ -51,7 +51,7 @@
     <div class="col-12 col-sm-6 col-xl-3">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <p class="text-muted small text-uppercase fw-semibold mb-2">Completed Today</p>
+                <p class="text-muted small text-uppercase fw-semibold mb-2">Выполнено сегодня</p>
                 <h2 class="display-6 mb-0">{{ stats.completed_today }}</h2>
             </div>
         </div>
@@ -62,11 +62,11 @@
     <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h2 class="h5 mb-3">Completions by Habit</h2>
+                <h2 class="h5 mb-3">Выполнения по привычкам</h2>
                 <img
                     class="img-fluid rounded"
                     src="data:image/png;base64,{{ bar_chart }}"
-                    alt="Bar chart of habit completions"
+                    alt="Столбчатая диаграмма выполнений привычек"
                 >
             </div>
         </div>
@@ -74,11 +74,11 @@
     <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h2 class="h5 mb-3">Completed vs Missed</h2>
+                <h2 class="h5 mb-3">Выполнено и пропущено</h2>
                 <img
                     class="img-fluid rounded"
                     src="data:image/png;base64,{{ pie_chart }}"
-                    alt="Pie chart of completed versus missed habits"
+                    alt="Круговая диаграмма выполненных и пропущенных привычек"
                 >
             </div>
         </div>
@@ -86,11 +86,11 @@
     <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h2 class="h5 mb-3">Daily Completions</h2>
+                <h2 class="h5 mb-3">Выполнения по дням</h2>
                 <img
                     class="img-fluid rounded"
                     src="data:image/png;base64,{{ line_chart }}"
-                    alt="Line chart of daily habit completions"
+                    alt="Линейный график ежедневных выполнений привычек"
                 >
             </div>
         </div>
@@ -98,11 +98,11 @@
     <div class="col-12 col-xl-6">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h2 class="h5 mb-3">Completion Distribution</h2>
+                <h2 class="h5 mb-3">Распределение выполнений</h2>
                 <img
                     class="img-fluid rounded"
                     src="data:image/png;base64,{{ histogram_chart }}"
-                    alt="Histogram of completion distribution"
+                    alt="Гистограмма распределения выполнений"
                 >
             </div>
         </div>
@@ -110,11 +110,11 @@
     <div class="col-12">
         <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-                <h2 class="h5 mb-3">Target vs Completion</h2>
+                <h2 class="h5 mb-3">Цель и факт выполнения</h2>
                 <img
                     class="img-fluid rounded"
                     src="data:image/png;base64,{{ scatter_chart }}"
-                    alt="Scatter chart of target count versus completion count"
+                    alt="Диаграмма рассеяния цели и количества выполнений"
                 >
             </div>
         </div>
@@ -124,25 +124,35 @@
 <section class="card border-0 shadow-sm">
     <div class="card-body p-0">
         <div class="p-4 border-bottom">
-            <h2 class="h5 mb-1">Habit Breakdown</h2>
-            <p class="text-muted mb-0">A quick view of the tracked habits behind the charts.</p>
+            <h2 class="h5 mb-1">Сводка по привычкам</h2>
+            <p class="text-muted mb-0">Краткий список привычек, на основе которых построены графики.</p>
         </div>
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th scope="col">Title</th>
-                        <th scope="col">Frequency</th>
-                        <th scope="col">Target Count</th>
-                        <th scope="col">Completion Count</th>
-                        <th scope="col">Last Completed</th>
+                        <th scope="col">Название</th>
+                        <th scope="col">Периодичность</th>
+                        <th scope="col">Целевое количество</th>
+                        <th scope="col">Количество выполнений</th>
+                        <th scope="col">Последнее выполнение</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for habit in stats.habits %}
                         <tr>
                             <td class="fw-semibold">{{ habit.title }}</td>
-                            <td>{{ habit.frequency }}</td>
+                            <td>
+                                {% if habit.frequency == "daily" %}
+                                    Ежедневно
+                                {% elif habit.frequency == "weekly" %}
+                                    Еженедельно
+                                {% elif habit.frequency == "monthly" %}
+                                    Ежемесячно
+                                {% else %}
+                                    {{ habit.frequency }}
+                                {% endif %}
+                            </td>
                             <td>{{ habit.target_count }}</td>
                             <td>{{ habit.completion_count }}</td>
                             <td>{{ habit.last_completed|default:"-" }}</td>
@@ -150,7 +160,7 @@
                     {% empty %}
                         <tr>
                             <td colspan="5" class="text-center text-muted py-4">
-                                No habits yet. Start by creating your first habit.
+                                Привычек пока нет. Начните с создания первой привычки.
                             </td>
                         </tr>
                     {% endfor %}

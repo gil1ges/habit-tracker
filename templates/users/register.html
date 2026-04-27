@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load form_tags %}
 
-{% block title %}Register | Habit Tracker{% endblock %}
+{% block title %}Регистрация | Трекер привычек{% endblock %}
 
 {% block content %}
 <section class="row justify-content-center">
@@ -9,8 +9,8 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4 p-md-5">
                 <div class="mb-4">
-                    <h1 class="h3 mb-2">Create your account</h1>
-                    <p class="text-secondary mb-0">Set up your profile to start tracking habits.</p>
+                    <h1 class="h3 mb-2">Создайте аккаунт</h1>
+                    <p class="text-secondary mb-0">Заполните профиль и начните отслеживать привычки.</p>
                 </div>
                 <form method="post" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
@@ -33,7 +33,7 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                    <button type="submit" class="btn btn-primary w-100">Регистрация</button>
                 </form>
             </div>
         </div>
