@@ -1,0 +1,6 @@
+Django
+Pillow
+pytest
+pytest-django
+requests
+matplotlib
