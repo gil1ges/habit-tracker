@@ -3,6 +3,13 @@ from django.db import models
 from django.urls import reverse
 from django.utils import timezone
 
+from .validators import (
+    validate_color,
+    validate_forbidden_words,
+    validate_habit_title,
+    validate_target_count,
+)
+
 
 class Habit(models.Model):
     class FrequencyChoices(models.TextChoices):
@@ -15,15 +22,21 @@ class Habit(models.Model):
         on_delete=models.CASCADE,
         related_name="habits",
     )
-    title = models.CharField(max_length=100)
-    description = models.TextField(blank=True)
+    title = models.CharField(
+        max_length=100,
+        validators=[validate_habit_title, validate_forbidden_words],
+    )
+    description = models.TextField(blank=True, validators=[validate_forbidden_words])
     frequency = models.CharField(
         max_length=20,
         choices=FrequencyChoices.choices,
         default=FrequencyChoices.DAILY,
     )
-    target_count = models.PositiveIntegerField(default=1)
-    color = models.CharField(max_length=7, default="#4CAF50")
+    target_count = models.PositiveIntegerField(
+        default=1,
+        validators=[validate_target_count],
+    )
+    color = models.CharField(max_length=7, default="#4CAF50", validators=[validate_color])
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
