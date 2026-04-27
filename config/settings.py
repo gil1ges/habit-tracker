@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "core",
     "users",
     "habits",
+    "analytics",
 ]
 
 MIDDLEWARE = [
@@ -103,7 +104,6 @@ LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
 
 AUTH_USER_MODEL = "users.CustomUser"
-
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
