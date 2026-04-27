@@ -101,7 +101,7 @@ LOGOUT_REDIRECT_URL = "habit_list"
 
 AUTH_USER_MODEL = "users.CustomUser"
 
-# Console logging is sufficient for the current local development setup.
+# Console logging keeps local development output simple and easy to inspect.
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
