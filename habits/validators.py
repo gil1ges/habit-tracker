@@ -19,7 +19,7 @@ def validate_target_count(value: int) -> None:
 
 def validate_color(value: str) -> None:
     if not HEX_COLOR_RE.fullmatch(value):
-        raise ValidationError("Цвет должен быть в формате HEX: #RRGGBB.")
+        raise ValidationError("Цвет должен быть в шестнадцатеричном формате: #RRGGBB.")
 
 
 def validate_forbidden_words(value: str) -> None:
