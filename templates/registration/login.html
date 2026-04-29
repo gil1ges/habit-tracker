@@ -32,6 +32,8 @@
                     {% endif %}
                     {% if next %}
                         <input type="hidden" name="next" value="{{ next }}">
+                    {% else %}
+                        <input type="hidden" name="next" value="{% url 'home' %}">
                     {% endif %}
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary">Login</button>

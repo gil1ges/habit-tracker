@@ -11,7 +11,7 @@ SECRET_KEY = "django-insecure-change-me"
 
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
 
 INSTALLED_APPS = [
@@ -94,10 +94,27 @@ STATIC_URL = "static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
+
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "users.CustomUser"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
+    },
+}
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
