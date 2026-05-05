@@ -18,6 +18,7 @@
             <div class="d-flex align-items-center gap-2">
                 {% if user.is_authenticated %}
                     <a class="btn btn-outline-light btn-sm" href="{% url 'habit_list' %}">Привычки</a>
+                    <a class="btn btn-outline-light btn-sm" href="{% url 'analytics_dashboard' %}">Аналитика</a>
                     <form method="post" action="{% url 'logout' %}" class="m-0">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-light btn-sm">Выйти</button>
