@@ -11,7 +11,7 @@ SECRET_KEY = "django-insecure-change-me"
 
 DEBUG = True
 
-ALLOWED_HOSTS: list[str] = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "testserver"]
 
 
 INSTALLED_APPS = [
@@ -21,6 +21,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "users",
+    "core",
+    "habits",
+    "analytics",
 ]
 
 MIDDLEWARE = [
@@ -95,6 +99,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
+AUTH_USER_MODEL = "users.CustomUser"
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

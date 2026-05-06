@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}{{ object.title }}{% endblock %}
+
+{% block content %}
+<section class="row g-4">
+    <div class="col-12 col-xl-7">
+        <article class="card border-0 shadow-sm h-100">
+            <div class="card-body p-4">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3 mb-4">
+                    <div>
+                        <h1 class="h3 mb-1">{{ object.title }}</h1>
+                        <p class="text-muted mb-0">{{ object.get_frequency_display }}</p>
+                    </div>
+                    <span class="badge {% if object.is_active %}bg-success-subtle text-success{% else %}bg-secondary-subtle text-secondary{% endif %}">
+                        {% if object.is_active %}Активна{% else %}Неактивна{% endif %}
+                    </span>
+                </div>
+
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Описание</dt>
+                    <dd class="col-sm-8">{{ object.description|default:"Не указано" }}</dd>
+
+                    <dt class="col-sm-4">Цель</dt>
+                    <dd class="col-sm-8">{{ object.target_count }}</dd>
+
+                    <dt class="col-sm-4">Цвет</dt>
+                    <dd class="col-sm-8">
+                        <span class="d-inline-flex align-items-center gap-2">
+                            <span class="rounded-circle border" style="width: 1rem; height: 1rem; background-color: {{ object.color }};"></span>
+                            {{ object.color }}
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-4">Создана</dt>
+                    <dd class="col-sm-8">{{ object.created_at|date:"d.m.Y H:i" }}</dd>
+
+                    <dt class="col-sm-4">Обновлена</dt>
+                    <dd class="col-sm-8">{{ object.updated_at|date:"d.m.Y H:i" }}</dd>
+                </dl>
+            </div>
+        </article>
+    </div>
+
+    <div class="col-12 col-xl-5">
+        <article class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4">
+                <h2 class="h5 mb-3">Отметить выполненной сегодня</h2>
+                <form method="post" action="{% url 'habit_complete' object.pk %}">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        {% for field in completion_form %}
+                            <div class="col-12">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="text-danger small mt-1">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" class="btn btn-success mt-3">Отметить выполненной сегодня</button>
+                </form>
+            </div>
+        </article>
+
+        <article class="card border-0 shadow-sm">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+                    <h2 class="h5 mb-0">История выполнений</h2>
+                    <span class="badge text-bg-light">{{ object.completions.count }}</span>
+                </div>
+
+                {% if object.completions.all %}
+                    <div class="list-group list-group-flush">
+                        {% for completion in object.completions.all %}
+                            <div class="list-group-item px-0">
+                                <div class="fw-semibold">{{ completion.completed_at|date:"d.m.Y" }}</div>
+                                <div class="text-muted small">{{ completion.note|default:"Без заметки" }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted mb-0">Выполнений пока нет.</p>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+</section>
+{% endblock %}
