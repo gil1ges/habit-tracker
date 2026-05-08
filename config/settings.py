@@ -6,6 +6,8 @@ from pathlib import Path
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+LOG_DIR = BASE_DIR / "logs"
+LOG_DIR.mkdir(exist_ok=True)
 
 SECRET_KEY = "django-insecure-change-me"
 
@@ -102,19 +104,63 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
-
 AUTH_USER_MODEL = "users.CustomUser"
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "simple",
+        },
+        "rotating_file": {
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": str(LOG_DIR / "app.log"),
+            "maxBytes": 1048576,
+            "backupCount": 5,
+            "formatter": "verbose",
+        },
+        "timed_file": {
+            "class": "logging.handlers.TimedRotatingFileHandler",
+            "filename": str(LOG_DIR / "daily.log"),
+            "when": "midnight",
+            "backupCount": 7,
+            "encoding": "utf-8",
+            "formatter": "verbose",
         },
     },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
+    "loggers": {
+        "django": {
+            "handlers": ["console", "rotating_file", "timed_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "users": {
+            "handlers": ["console", "rotating_file", "timed_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "habits": {
+            "handlers": ["console", "rotating_file", "timed_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "analytics": {
+            "handlers": ["console", "rotating_file", "timed_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
 
