@@ -21,8 +21,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "users",
     "core",
+    "users",
+    "habits",
 ]
 
 MIDDLEWARE = [
@@ -100,6 +101,7 @@ EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
 LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
+
 AUTH_USER_MODEL = "users.CustomUser"
 
 LOGGING = {
