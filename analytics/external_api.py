@@ -8,8 +8,8 @@ logger = logging.getLogger(__name__)
 QUOTE_CACHE_KEY = "analytics:motivational_quote"
 QUOTE_CACHE_TIMEOUT = 60 * 60
 FALLBACK_QUOTE = {
-    "content": "Small steps every day lead to big results.",
-    "author": "Habit Tracker",
+    "content": "Маленькие шаги каждый день приводят к большим результатам.",
+    "author": "Трекер привычек",
 }
 
 

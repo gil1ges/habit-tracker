@@ -22,6 +22,22 @@ class HabitForm(forms.ModelForm):
             "color",
             "is_active",
         ]
+        labels = {
+            "title": "Название",
+            "description": "Описание",
+            "frequency": "Периодичность",
+            "target_count": "Целевое количество",
+            "color": "Цвет",
+            "is_active": "Активна",
+        }
+        help_texts = {
+            "title": "Короткое и понятное название привычки.",
+            "description": "Необязательное описание, которое поможет держать фокус.",
+            "frequency": "Выберите, как часто вы хотите выполнять привычку.",
+            "target_count": "Сколько раз нужно выполнить привычку за выбранный период.",
+            "color": "Цвет в формате HEX, например #4CAF50.",
+            "is_active": "Неактивные привычки сохраняются в списке, но их можно временно поставить на паузу.",
+        }
         widgets = {
             "title": forms.TextInput(
                 attrs={
@@ -104,6 +120,14 @@ class HabitCompletionForm(forms.ModelForm):
     class Meta:
         model = HabitCompletion
         fields = ["completed_at", "note"]
+        labels = {
+            "completed_at": "Дата выполнения",
+            "note": "Заметка",
+        }
+        help_texts = {
+            "completed_at": "Дата фиксируется на сегодня.",
+            "note": "Короткий комментарий о том, как прошло выполнение.",
+        }
         widgets = {
             "completed_at": forms.DateInput(
                 attrs={

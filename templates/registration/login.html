@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load form_tags %}
 
-{% block title %}Login | Habit Tracker{% endblock %}
+{% block title %}Вход | Трекер привычек{% endblock %}
 
 {% block content %}
 <section class="row justify-content-center">
@@ -9,8 +9,8 @@
         <div class="card border-0 shadow-sm">
             <div class="card-body p-4 p-md-5">
                 <div class="mb-4">
-                    <h1 class="h3 mb-2">Welcome back</h1>
-                    <p class="text-secondary mb-0">Sign in to continue managing your habits.</p>
+                    <h1 class="h3 mb-2">С возвращением</h1>
+                    <p class="text-secondary mb-0">Войдите, чтобы продолжить работу со своими привычками.</p>
                 </div>
                 <form method="post" novalidate>
                     {% csrf_token %}
@@ -34,8 +34,8 @@
                         <input type="hidden" name="next" value="{{ next }}">
                     {% endif %}
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                        <a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">Forgot password?</a>
+                        <button type="submit" class="btn btn-primary">Вход</button>
+                        <a class="btn btn-outline-secondary" href="{% url 'password_reset' %}">Забыли пароль?</a>
                     </div>
                 </form>
             </div>

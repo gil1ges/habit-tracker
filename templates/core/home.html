@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}Home | Habit Tracker{% endblock %}
+{% block title %}Главная | Трекер привычек{% endblock %}
 
 {% block content %}
 <section class="row justify-content-center">
@@ -9,40 +9,40 @@
             <div class="card-body p-4 p-md-5">
                 <div class="row align-items-center g-4">
                     <div class="col-md-7">
-                        <span class="badge text-bg-primary mb-3">Habit Tracker</span>
-                        <h1 class="display-6 fw-bold mb-3">Build routines that actually stick.</h1>
+                        <span class="badge text-bg-primary mb-3">Трекер привычек</span>
+                        <h1 class="display-6 fw-bold mb-3">Формируйте привычки, которые действительно закрепляются.</h1>
                         <p class="lead text-secondary mb-4">
-                            Register an account, keep your habits in one place, and review progress from one clean dashboard.
+                            Создайте аккаунт, ведите все привычки в одном месте и следите за прогрессом на наглядной панели.
                         </p>
                         <div class="d-flex flex-wrap gap-2">
                             {% if user.is_authenticated %}
-                                <a class="btn btn-primary btn-lg" href="{% url 'password_change' %}">Manage account</a>
+                                <a class="btn btn-primary btn-lg" href="{% url 'password_change' %}">Управление аккаунтом</a>
                             {% else %}
-                                <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Create account</a>
-                                <a class="btn btn-outline-primary btn-lg" href="{% url 'login' %}">Sign in</a>
+                                <a class="btn btn-primary btn-lg" href="{% url 'register' %}">Создать аккаунт</a>
+                                <a class="btn btn-outline-primary btn-lg" href="{% url 'login' %}">Войти</a>
                             {% endif %}
                         </div>
                     </div>
                     <div class="col-md-5">
                         <div class="bg-body-tertiary border rounded-4 p-4 h-100">
-                            <h2 class="h4 mb-3">What you get</h2>
+                            <h2 class="h4 mb-3">Что вы получите</h2>
                             <div class="d-grid gap-3">
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
-                                        <h3 class="h6 mb-2">Simple onboarding</h3>
-                                        <p class="mb-0 text-secondary">Create an account in a few steps and start building your routine.</p>
+                                        <h3 class="h6 mb-2">Быстрый старт</h3>
+                                        <p class="mb-0 text-secondary">Зарегистрируйтесь за пару шагов и сразу начните выстраивать свой ритм.</p>
                                     </div>
                                 </div>
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
-                                        <h3 class="h6 mb-2">Future-ready navigation</h3>
-                                        <p class="mb-0 text-secondary">Habits and analytics links stay safe until those apps are connected.</p>
+                                        <h3 class="h6 mb-2">Удобная навигация</h3>
+                                        <p class="mb-0 text-secondary">Быстро переходите к привычкам и аналитике из любого раздела приложения.</p>
                                     </div>
                                 </div>
                                 <div class="card border-0 shadow-sm">
                                     <div class="card-body">
-                                        <h3 class="h6 mb-2">Responsive UI</h3>
-                                        <p class="mb-0 text-secondary">Bootstrap-based pages that work cleanly on desktop and mobile.</p>
+                                        <h3 class="h6 mb-2">Адаптивный интерфейс</h3>
+                                        <p class="mb-0 text-secondary">Страницы одинаково удобно работают и на компьютере, и на мобильных устройствах.</p>
                                     </div>
                                 </div>
                             </div>
