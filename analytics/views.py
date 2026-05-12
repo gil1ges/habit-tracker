@@ -42,5 +42,7 @@ def api_stats(request):
             request.user.id,
             exc_info=True,
         )
-        return JsonResponse({"detail": "Unable to load analytics stats."}, status=500)
-
+        return JsonResponse(
+            {"detail": "Не удалось загрузить статистику аналитики."},
+            status=500,
+        )

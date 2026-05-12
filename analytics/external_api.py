@@ -13,6 +13,10 @@ FALLBACK_QUOTE = {
 }
 
 
+def _has_cyrillic(text: str) -> bool:
+    return any("а" <= char.lower() <= "я" or char.lower() == "ё" for char in text)
+
+
 def get_motivational_quote() -> dict:
     cached_quote = cache.get(QUOTE_CACHE_KEY)
     if cached_quote is not None:
@@ -29,6 +33,8 @@ def get_motivational_quote() -> dict:
             "content": payload["content"],
             "author": payload["author"],
         }
+        if not _has_cyrillic(quote["content"]):
+            quote = FALLBACK_QUOTE
     except (KeyError, ValueError, requests.RequestException) as exc:
         logger.warning("Failed to fetch motivational quote: %s", exc)
         quote = FALLBACK_QUOTE
