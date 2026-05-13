@@ -1,6 +1,5 @@
 from django import forms
 from django.core.exceptions import ValidationError
-from django.utils import timezone
 
 from .models import Habit, HabitCompletion
 from .validators import (
@@ -119,22 +118,14 @@ class HabitForm(forms.ModelForm):
 class HabitCompletionForm(forms.ModelForm):
     class Meta:
         model = HabitCompletion
-        fields = ["completed_at", "note"]
+        fields = ["note"]
         labels = {
-            "completed_at": "Дата выполнения",
             "note": "Заметка",
         }
         help_texts = {
-            "completed_at": "Дата фиксируется на сегодня.",
             "note": "Короткий комментарий о том, как прошло выполнение.",
         }
         widgets = {
-            "completed_at": forms.DateInput(
-                attrs={
-                    "class": "form-control",
-                    "type": "date",
-                }
-            ),
             "note": forms.TextInput(
                 attrs={
                     "class": "form-control",
@@ -142,9 +133,3 @@ class HabitCompletionForm(forms.ModelForm):
                 }
             ),
         }
-
-    def clean_completed_at(self):
-        completed_at = self.cleaned_data["completed_at"]
-        if completed_at > timezone.localdate():
-            raise ValidationError("Нельзя отметить выполнение датой из будущего.")
-        return completed_at

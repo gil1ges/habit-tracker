@@ -54,11 +54,7 @@ class HabitDetailView(OwnerHabitQuerysetMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        completion_form = HabitCompletionForm(
-            initial={"completed_at": timezone.localdate()}
-        )
-        completion_form.fields["completed_at"].widget.attrs["readonly"] = "readonly"
-        context["completion_form"] = completion_form
+        context["completion_form"] = HabitCompletionForm()
         return context
 
 
