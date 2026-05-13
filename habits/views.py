@@ -25,7 +25,7 @@ class OwnerHabitQuerysetMixin(LoginRequiredMixin):
         target_habit = Habit.objects.filter(pk=pk).select_related("user").first()
 
         if target_habit is None:
-            raise Http404("Habit not found.")
+            raise Http404("Привычка не найдена.")
 
         if target_habit.user_id != self.request.user.id:
             logger.warning(
@@ -34,7 +34,7 @@ class OwnerHabitQuerysetMixin(LoginRequiredMixin):
                 target_habit.pk,
                 target_habit.user_id,
             )
-            raise Http404("Habit not found.")
+            raise Http404("Привычка не найдена.")
 
         return queryset.get(pk=pk)
 
@@ -122,7 +122,7 @@ def habit_complete(request: HttpRequest, pk: int) -> HttpResponse:
             habit.pk,
             habit.user_id,
         )
-        raise Http404("Habit not found.")
+        raise Http404("Привычка не найдена.")
 
     note = request.POST.get("note", "").strip()
     completion, created = HabitCompletion.objects.get_or_create(
