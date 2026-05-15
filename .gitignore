@@ -3,3 +3,21 @@
 .env
 .env.*.bak
 docker-compose.yml*.bak
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django local database
+db.sqlite3
+
+# Logs
+logs/*.log
+
+# Environment
+.env
+
+# Generated static/media
+staticfiles/
+media/
