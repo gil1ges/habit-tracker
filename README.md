@@ -8,6 +8,7 @@
 - `users` — регистрация, кастомный пользователь, профильные поля;
 - `habits` — привычки, выполнения привычек, CRUD и формы;
 - `analytics` — статистика, графики и JSON API;
+- `api` — REST API, JWT-аутентификация и OpenAPI-документация;
 - `config` — настройки проекта и корневая маршрутизация.
 
 ## Стек
@@ -18,6 +19,7 @@
 - Bootstrap 5 через CDN;
 - Matplotlib для построения графиков;
 - Requests для получения внешней мотивирующей цитаты;
+- Django REST Framework, Simple JWT и drf-spectacular для REST API;
 - Pillow для изображений профиля;
 - Pytest и pytest-django для тестов.
 
@@ -328,7 +330,7 @@ docker compose up -d --build
 
 Важные параметры:
 
-- `INSTALLED_APPS` подключает `core`, `users`, `habits`, `analytics`;
+- `INSTALLED_APPS` подключает `core`, `users`, `habits`, `analytics`, `api`, `rest_framework` и `drf_spectacular`;
 - `AUTH_USER_MODEL = "users.CustomUser"` задаёт кастомную модель пользователя;
 - `LOGIN_URL = "login"` отправляет неавторизованных пользователей на страницу входа;
 - `LOGIN_REDIRECT_URL = "habit_list"` после входа ведёт на список привычек;
@@ -376,6 +378,13 @@ analytics/
   views.py         dashboard и JSON API
   urls.py          URL аналитики
 
+api/
+  serializers.py   сериализация пользователей, привычек и выполнений
+  views.py         REST endpoints, viewsets и actions
+  urls.py          маршруты REST API и OpenAPI
+  permissions.py   проверка владения объектами
+  tests/           тесты REST API
+
 templates/
   base.html                         общий layout
   core/home.html                    главная
@@ -407,6 +416,7 @@ tests/
 | `/auth/` | `users.urls` | Регистрация |
 | `/habits/` | `habits.urls` | CRUD привычек и отметка выполнения |
 | `/analytics/` | `analytics.urls` | Аналитика и API статистики |
+| `/api/` | `api.urls` | REST API, JWT и документация |
 
 Важно: два подключения начинаются с `/auth/`. Это нормально: стандартные auth-URL Django дают `/auth/login/`, `/auth/logout/`, `/auth/password_change/` и другие, а `users.urls` добавляет `/auth/register/`.
 
@@ -477,6 +487,104 @@ tests/
 | `/analytics/api/stats/` | `analytics_api_stats` | `analytics.views.api_stats` | JSON | Только авторизованным |
 
 Неавторизованный пользователь редиректится на `/auth/login/`.
+
+## REST API
+
+REST API доступен отдельно под префиксом `/api/` и использует JWT-токены через Simple JWT. Обычные страницы сайта и session-based авторизация Django продолжают работать как раньше.
+
+### Endpoints
+
+- `POST /api/auth/register/`
+- `POST /api/auth/token/`
+- `POST /api/auth/token/refresh/`
+- `GET /api/users/me/`
+- `PATCH /api/users/me/`
+- `GET /api/habits/`
+- `POST /api/habits/`
+- `GET /api/habits/{id}/`
+- `PATCH /api/habits/{id}/`
+- `DELETE /api/habits/{id}/`
+- `POST /api/habits/{id}/complete/`
+- `GET /api/habits/{id}/completions/`
+- `GET /api/completions/`
+- `POST /api/completions/`
+- `GET /api/completions/{id}/`
+- `PATCH /api/completions/{id}/`
+- `DELETE /api/completions/{id}/`
+- `GET /api/stats/`
+- `GET /api/quote/`
+- `GET /api/docs/`
+
+OpenAPI schema доступна по адресу:
+
+```text
+GET /api/schema/
+```
+
+### curl examples
+
+1. Register:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/register/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "api_user",
+    "email": "api_user@example.com",
+    "phone": "+79990000000",
+    "password": "StrongPass1!",
+    "password2": "StrongPass1!"
+  }'
+```
+
+2. Obtain token:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/auth/token/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "api_user",
+    "password": "StrongPass1!"
+  }'
+```
+
+Для следующих запросов сохраните `access` token:
+
+```bash
+ACCESS="сюда_вставить_access_token"
+```
+
+3. Create habit:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/habits/ \
+  -H "Authorization: Bearer $ACCESS" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "title": "Morning run",
+    "description": "Run for 15 minutes",
+    "frequency": "daily",
+    "target_count": 1,
+    "color": "#4CAF50",
+    "is_active": true
+  }'
+```
+
+4. Complete habit:
+
+```bash
+curl -X POST http://127.0.0.1:8000/api/habits/1/complete/ \
+  -H "Authorization: Bearer $ACCESS" \
+  -H "Content-Type: application/json" \
+  -d '{"note": "Finished today"}'
+```
+
+5. Get stats:
+
+```bash
+curl http://127.0.0.1:8000/api/stats/ \
+  -H "Authorization: Bearer $ACCESS"
+```
 
 ## CRUD привычек
 
