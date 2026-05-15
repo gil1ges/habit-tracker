@@ -3,12 +3,12 @@ import logging
 from django.db.models import Count, Max
 from django.http import Http404
 from django.utils import timezone
-from rest_framework import generics
-from rest_framework.decorators import action
+from rest_framework import generics, status, viewsets
+from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from rest_framework import status, viewsets
 
+from analytics.services import get_user_habit_stats
 from habits.models import Habit, HabitCompletion
 
 from .permissions import IsOwner
@@ -20,6 +20,10 @@ from .serializers import (
 )
 
 logger = logging.getLogger(__name__)
+FALLBACK_QUOTE = {
+    "content": "Small steps every day lead to big results.",
+    "author": "Habit Tracker",
+}
 
 
 class RegisterAPIView(generics.CreateAPIView):
@@ -213,3 +217,48 @@ class HabitCompletionViewSet(viewsets.ModelViewSet):
             instance.completed_at,
         )
         instance.delete()
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def stats_api(request):
+    try:
+        return Response(get_user_habit_stats(request.user))
+    except Exception:
+        logger.error(
+            "API stats failed: user_id=%s",
+            request.user.id,
+            exc_info=True,
+        )
+        return Response(
+            {"detail": "Unable to load habit statistics."},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        )
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def quote_api(request):
+    try:
+        from analytics import external_api
+
+        get_quote = getattr(external_api, "get_motivational_quote", None)
+        if get_quote is None:
+            logger.warning("Motivational quote provider is unavailable.")
+            return Response(FALLBACK_QUOTE)
+
+        quote = get_quote()
+        if not isinstance(quote, dict):
+            logger.warning("Motivational quote provider returned invalid payload.")
+            return Response(FALLBACK_QUOTE)
+
+        content = quote.get("content")
+        author = quote.get("author")
+        if not content or not author:
+            logger.warning("Motivational quote provider returned incomplete payload.")
+            return Response(FALLBACK_QUOTE)
+
+        return Response({"content": content, "author": author})
+    except Exception as exc:
+        logger.warning("Failed to fetch motivational quote: %s", exc, exc_info=True)
+        return Response(FALLBACK_QUOTE)
