@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "users",
     "habits",
     "analytics",
+    "api",
 ]
 
 MIDDLEWARE = [
