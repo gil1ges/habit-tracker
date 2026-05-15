@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "rest_framework",
+    "drf_spectacular",
     "core",
     "users",
     "habits",
@@ -153,6 +155,23 @@ LOGIN_REDIRECT_URL = "habit_list"
 LOGOUT_REDIRECT_URL = "home"
 AUTH_USER_MODEL = "users.CustomUser"
 
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Habit Tracker API",
+    "DESCRIPTION": "REST API for Habit Tracker project",
+    "VERSION": "1.0.0",
+}
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -204,6 +223,11 @@ LOGGING = {
             "propagate": False,
         },
         "analytics": {
+            "handlers": ["console", "rotating_file", "timed_file"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "api": {
             "handlers": ["console", "rotating_file", "timed_file"],
             "level": "INFO",
             "propagate": False,
