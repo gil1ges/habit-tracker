@@ -4,3 +4,7 @@ pytest
 pytest-django
 requests
 matplotlib
+gunicorn
+djangorestframework
+djangorestframework-simplejwt
+drf-spectacular
